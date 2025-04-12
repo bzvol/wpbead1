@@ -1,4 +1,4 @@
-const levels = {
+export const levels = {
     "easy": {
         "name": "Easy",
         "points": 5,
@@ -23,7 +23,7 @@ const levels = {
     }
 }
 
-const evolutions = [
+export const evolutions = [
     {
         "name": "Scripting Evolution",
         "tooltip": "Scripting.png",
