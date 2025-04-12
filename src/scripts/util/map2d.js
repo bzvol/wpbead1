@@ -1,4 +1,4 @@
-class Board {
+class Map2D {
     _map = new Map();
 
     constructor(rows, cols, defaultValue) {

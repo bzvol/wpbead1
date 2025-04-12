@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primary: #000;
+    --color-secondary: #dcdcdc;
+    --color-accent: aqua;
+    --color-background: #000;
+    --color-text: #dcdcdc;
+}
+
+html {
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+input {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: 2px solid var(--color-accent);
+    border-radius: .6rem;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: 2px solid var(--color-accent);
+    border-radius: .6rem;
+    padding: 0.6rem 3rem;
+    text-align: center;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    background-image: url(../../assets/dropdown.png);
+    background-repeat: no-repeat;
+    background-position: right .5rem center;
+    background-size: 1rem;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+}
+
+button {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: 2px solid var(--color-accent);
+    border-radius: .6rem;
+    padding: 1rem 3rem;
+    text-align: center;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+    user-select: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+}
+
+/* Wrapper for centering content */
+.ctr {
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.border-blue {
+    border: 2px solid var(--color-accent);
+}
+
+.br-1 {
+    border-radius: 1rem;
+}
+
+.br-2 {
+    border-radius: 1.5rem;
+}
+
+.br-3 {
+    border-radius: 2rem;
+}

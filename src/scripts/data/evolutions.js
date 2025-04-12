@@ -1,5 +1,4 @@
-const levels =
-{
+const levels = {
     "easy": {
         "name": "Easy",
         "points": 5,
