@@ -1,0 +1,88 @@
+function readGameParams() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    const name = (urlParams.get('name') || 'Player 1').toUpperCase();
+    const difficulty = urlParams.get('difficulty') || 'medium';
+
+    return {name, difficulty};
+}
+
+function setBoardSize(cols, rows) {
+    const board = document.querySelector('#board');
+    board.innerHTML = '';
+
+    board.style.setProperty('--cols', cols);
+    board.style.setProperty('--rows', rows);
+
+    for (let i = 0; i < cols * rows; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('board-cell');
+        board.appendChild(cell);
+    }
+}
+
+// Generate the board based on the difficulty level
+const {name, difficulty} = readGameParams();
+const {cols, rows} = levels[difficulty];
+setBoardSize(cols, rows);
+
+function initializePoints(evolutions) {
+    const pointsSection = document.querySelector('#points');
+    pointsSection.innerHTML = '';
+
+    for (const evolution of evolutions) {
+        const {shortName, points} = evolution;
+
+        const label = document.createElement('span');
+        label.classList.add('label');
+        label.textContent = shortName;
+        pointsSection.appendChild(label);
+
+        const value = document.createElement('span');
+        value.classList.add('value');
+        const pointsString = points.toString().padStart(2, '0');
+        value.textContent = `* ${pointsString}p = ##`;
+        pointsSection.appendChild(value);
+    }
+}
+
+// Initialize the points section
+initializePoints(evolutions);
+
+function initializeLeaderboard(levels) {
+    const leaderboard = document.querySelector('#leaderboard');
+    leaderboard.innerHTML = '<h2>Leaderboard</h2>';
+
+    for (const level of Object.keys(levels)) {
+        const {name} = levels[level];
+
+        const section = document.createElement('div');
+        section.classList.add('lb-section');
+
+        const title = document.createElement('h3');
+        title.textContent = name;
+        section.appendChild(title);
+
+        const list = document.createElement('div');
+        list.classList.add('lb-list');
+
+        for (let i = 0; i < 5; i++) {
+            const label = document.createElement('span');
+            label.classList.add('label');
+            label.textContent = '********';
+            list.appendChild(label);
+
+            const value = document.createElement('span');
+            value.classList.add('value');
+            value.textContent = ': 000000';
+            list.appendChild(value);
+        }
+
+        section.appendChild(list);
+        leaderboard.appendChild(section);
+    }
+}
+
+// Initialize the leaderboard
+initializeLeaderboard(levels);

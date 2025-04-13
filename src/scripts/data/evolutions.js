@@ -26,6 +26,7 @@ const levels = {
 const evolutions = [
     {
         "name": "Scripting Evolution",
+        "shortName": "Scripting",
         "tooltip": "Scripting.png",
         "points": 5,
         "difficulty": "easy",
@@ -70,6 +71,7 @@ const evolutions = [
     },
     {
         "name": "Styling Technologies",
+        "shortName": "Styling",
         "tooltip": "Styling.png",
         "points": 5,
         "difficulty": "easy",
@@ -114,6 +116,7 @@ const evolutions = [
     },
     {
         "name": "Markup Languages",
+        "shortName": "Markup",
         "tooltip": "Markup.png",
         "points": 5,
         "difficulty": "easy",
@@ -159,6 +162,7 @@ const evolutions = [
     },
     {
         "name": "C Language Evolution",
+        "shortName": "Lang C",
         "tooltip": "C language.png",
         "points": 10,
         "difficulty": "medium",
@@ -204,6 +208,7 @@ const evolutions = [
     },
     {
         "name": "IDE Evolution",
+        "shortName": "IDE",
         "tooltip": "IDE.png",
         "points": 10,
         "difficulty": "medium",
@@ -249,6 +254,7 @@ const evolutions = [
     },
     {
         "name": "Audio Formats",
+        "shortName": "Audio",
         "tooltip": "Audio.png",
         "points": 10,
         "difficulty": "medium",
@@ -293,6 +299,7 @@ const evolutions = [
     },
     {
         "name": "Video Formats",
+        "shortName": "Video",
         "tooltip": "Video.png",
         "points": 10,
         "difficulty": "medium",
@@ -338,6 +345,7 @@ const evolutions = [
     },
     {
         "name": "Image Formats",
+        "shortName": "Image",
         "tooltip": "Image.png",
         "points": 15,
         "difficulty": "hard",
@@ -383,6 +391,7 @@ const evolutions = [
     },
     {
         "name": "CMS Evolution",
+        "shortName": "CMS",
         "tooltip": "CMS.png",
         "points": 15,
         "difficulty": "hard",
@@ -428,6 +437,7 @@ const evolutions = [
     },
     {
         "name": "Database Evolution",
+        "shortName": "DB",
         "tooltip": "DB.png",
         "points": 15,
         "difficulty": "hard",

@@ -13,19 +13,48 @@
     <title>Web Prog Evolutions</title>
 </head>
 <body>
+<div id="screen-wrapper">
+    <header id="header"><h1>WEB PROG EVOLUTION</h1></header>
+    <main id="game-container">
+        <section id="control">
+            <div id="info">
+                <span class="label">Name</span>
+                <span class="value" id="info-name">: Unknown</span>
 
+                <span class="label">Difficulty</span>
+                <span class="value" id="info-difficulty">: Unknown</span>
+
+                <span class="label">Time</span>
+                <span class="value" id="info-time">: ##:##</span>
+
+                <span class="label">Score</span>
+                <span class="value" id="info-score">: ######</span>
+            </div>
+
+            <button id="btn-draw" disabled>Draw</button>
+        </section>
+        <section id="points"></section>
+        <section id="board"></section>
+        <aside id="leaderboard">
+            <h2>Leaderboard</h2>
+        </aside>
+    </main>
+</div>
 
 <noscript>
     <style>
         body {
             background-color: #000;
             color: #fff;
-            font-family: 'Press Start 2P', cursive;
             text-align: center;
         }
     </style>
     <h1>JavaScript is disabled</h1>
     <p>Please enable JavaScript to view this page.</p>
 </noscript>
+
+<!-- Minified scripts are avg. 50% smaller, and therefore load faster -->
+<script src="scripts/data/evolutions.min.js"></script>
+<script src="scripts/initUi.min.js"></script>
 </body>
 </html>

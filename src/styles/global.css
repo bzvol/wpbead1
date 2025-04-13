@@ -6,6 +6,7 @@
     --color-primary: #000;
     --color-secondary: #dcdcdc;
     --color-accent: aqua;
+    --color-accent-secondary: deeppink;
     --color-background: #000;
     --color-text: #dcdcdc;
 }
@@ -25,6 +26,23 @@ body {
     padding: 0;
     background-color: var(--color-background);
     color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: initial;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.5rem;
 }
 
 input {
@@ -97,9 +115,13 @@ button:hover {
     cursor: pointer;
 }
 
-button:active {
+button:not(:disabled):active {
     transform: scale(0.95);
     transition: transform 0.1s;
+}
+
+button:disabled {
+    cursor: not-allowed;
 }
 
 /* Wrapper for centering content */

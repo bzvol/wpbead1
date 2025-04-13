@@ -20,7 +20,7 @@
             <label for="name">NAME:</label>
             <input type="text" name="name" id="name"
                    placeholder="NAME" value="PLAYER 1"
-                   maxlength="30" autocomplete="off" required>
+                   maxlength="8" autocomplete="off" required>
 
             <label for="difficulty">DIFFICULTY:</label>
             <div class="select-wrapper">
@@ -45,7 +45,10 @@
     <p>Please enable JavaScript to view this page.</p>
 </noscript>
 
-<script src="scripts/data/evolutions.js"></script>
+<!-- I tried to use ES6 `type="module"` for scripts, however
+     then you can only view the page on a server, as
+     modules do not support `file://` protocol. -->
+<script src="scripts/data/evolutions.min.js"></script>
 <script src="scripts/index.js"></script>
 </body>
 </html>
