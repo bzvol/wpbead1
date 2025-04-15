@@ -1,3 +1,22 @@
+const {name, difficulty} = readGameParams();
+initUi(difficulty, evolutions, levels);
+runGame(name, difficulty);
+
+function initUi(difficulty, evolutions, levels) {
+    // Generate the board based on the difficulty level
+    const {cols, rows} = levels[difficulty];
+    setBoardSize(cols, rows);
+
+    // Initialize the points section
+    initializePoints(evolutions);
+
+    // Initialize the leaderboard
+    initializeLeaderboard(levels);
+
+    // Load the leaderboard data from local storage
+    loadLeaderboardData();
+}
+
 function readGameParams() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -22,11 +41,6 @@ function setBoardSize(cols, rows) {
     }
 }
 
-// Generate the board based on the difficulty level
-const {name, difficulty} = readGameParams();
-const {cols, rows} = levels[difficulty];
-setBoardSize(cols, rows);
-
 function initializePoints(evolutions) {
     const pointsSection = document.querySelector('#points');
     pointsSection.innerHTML = '';
@@ -47,9 +61,6 @@ function initializePoints(evolutions) {
     }
 }
 
-// Initialize the points section
-initializePoints(evolutions);
-
 function initializeLeaderboard(levels) {
     const leaderboard = document.querySelector('#leaderboard');
     leaderboard.innerHTML = '<h2>Leaderboard</h2>';
@@ -59,6 +70,7 @@ function initializeLeaderboard(levels) {
 
         const section = document.createElement('div');
         section.classList.add('lb-section');
+        section.dataset.level = level;
 
         const title = document.createElement('h3');
         title.textContent = name;
@@ -84,5 +96,27 @@ function initializeLeaderboard(levels) {
     }
 }
 
-// Initialize the leaderboard
-initializeLeaderboard(levels);
+function loadLeaderboardData() {
+    let lbData = localStorage.getItem('leaderboard');
+    if (!lbData) return;
+
+    lbData = JSON.parse(lbData);
+    const loadedLevels = Object.keys(lbData);
+
+    const sections = document.querySelectorAll('#leaderboard > .lb-section');
+    for (const section of sections) {
+        const sectionLevel = section.dataset.level;
+        if (!loadedLevels.includes(sectionLevel)) continue;
+        const scores = lbData[sectionLevel].toSorted((a, b) => b.score - a.score);
+
+        const labels = section.querySelectorAll('.lb-list > .label');
+        const values = section.querySelectorAll('.lb-list > .value');
+
+        for (let i = 0; i < Math.min(scores.length, 5); i++) {
+            const {name, score} = scores[i];
+            labels[i].textContent = name;
+            const scoreString = score.toString().padStart(6, '0');
+            values[i].textContent = `: ${scoreString}`;
+        }
+    }
+}
