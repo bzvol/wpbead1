@@ -34,10 +34,16 @@ function setBoardSize(cols, rows) {
     board.style.setProperty('--cols', cols);
     board.style.setProperty('--rows', rows);
 
-    for (let i = 0; i < cols * rows; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('board-cell');
-        board.appendChild(cell);
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            const cell = document.createElement('div');
+
+            cell.classList.add('board-cell');
+            cell.dataset.x = j.toString();
+            cell.dataset.y = i.toString();
+
+            board.appendChild(cell);
+        }
     }
 }
 

@@ -11,7 +11,16 @@ class Map2D {
             throw new Error('Invalid board size, rows and cols must be greater than 0');
         }
 
-        this.fill(rows, cols, defaultValue);
+        this.cols = cols;
+        this.rows = rows;
+
+        this.eventListeners = {
+            onSet: null,
+            onDelete: null,
+            onClear: null
+        };
+
+        this.fill(this.rows, this.cols, defaultValue);
     }
 
     // Using the Cantor pairing function to encode 2D coordinates into a single number
@@ -35,6 +44,10 @@ class Map2D {
     set(x, y, value) {
         const key = this._encode(x, y);
         this._map.set(key, value);
+
+        if (this.eventListeners.onSet) {
+            this.eventListeners.onSet(x, y, value);
+        }
     }
 
     has(x, y) {
@@ -44,11 +57,21 @@ class Map2D {
 
     delete(x, y) {
         const key = this._encode(x, y);
-        return this._map.delete(key);
+        const deleted = this._map.delete(key);
+
+        if (deleted && this.eventListeners.onDelete) {
+            this.eventListeners.onDelete(x, y);
+        }
+
+        return deleted;
     }
 
     clear() {
         this._map.clear();
+
+        if (this.eventListeners.onClear) {
+            this.eventListeners.onClear();
+        }
     }
 
     keys() {
@@ -85,5 +108,60 @@ class Map2D {
                 this.set(x, y, value);
             }
         }
+    }
+
+    setEventListeners(onSet, onDelete, onClear) {
+        this.eventListeners.onSet = onSet;
+        this.eventListeners.onDelete = onDelete;
+        this.eventListeners.onClear = onClear;
+    }
+}
+
+class Map2DDisplay {
+    constructor(map, boardElement) {
+        this._map = map;
+        this._boardElement = boardElement;
+
+        this._map.setEventListeners(
+            this._onSet.bind(this),
+            this._onDelete.bind(this),
+            this._onClear.bind(this));
+    }
+
+    _getCell(x, y) {
+        return this._boardElement.querySelector(this._cellSelector(x, y));
+    }
+
+    _cellSelector(x, y) {
+        return `.board-cell[data-x="${x}"][data-y="${y}"]`;
+    }
+
+    _activateCell(cell, value) {
+        cell.classList.add('active-cell');
+        cell.textContent = value;
+    }
+
+    _deactivateCell(cell) {
+        cell.classList.remove('active-cell');
+        cell.textContent = '';
+    }
+
+    _onSet(x, y, value) {
+        const cell = this._getCell(x, y);
+        if (cell) {
+            this._activateCell(cell, value);
+        }
+    }
+
+    _onDelete(x, y) {
+        const cell = this._getCell(x, y);
+        if (cell) {
+            this._deactivateCell(cell);
+        }
+    }
+
+    _onClear() {
+        const cells = this._boardElement.querySelectorAll('.board-cell');
+        cells.forEach(cell => this._deactivateCell(cell));
     }
 }

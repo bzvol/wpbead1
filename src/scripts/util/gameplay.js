@@ -7,6 +7,9 @@ class Gameplay {
         this._map = new Map2D(settings.rows, settings.cols);
         this._timer = new Timer(settings.time * 60, this._timerExpired.bind(this));
 
+        const boardElement = document.querySelector('#board');
+        this._mapDisplay = new Map2DDisplay(this._map, boardElement);
+
         this._initUiWithParams();
     }
 
