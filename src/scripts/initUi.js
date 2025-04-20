@@ -8,7 +8,7 @@ function initUi(difficulty, evolutions, levels) {
     setBoardSize(cols, rows);
 
     // Initialize the points section
-    initializePoints(evolutions);
+    initializePoints(evolutions, difficulty);
 
     // Initialize the leaderboard
     initializeLeaderboard(levels);
@@ -41,11 +41,13 @@ function setBoardSize(cols, rows) {
     }
 }
 
-function initializePoints(evolutions) {
+function initializePoints(evolutions, difficulty) {
     const pointsSection = document.querySelector('#points');
     pointsSection.innerHTML = '';
 
     for (const evolution of evolutions) {
+        if (evolution.difficulty !== difficulty) continue;
+
         const {shortName, points} = evolution;
 
         const label = document.createElement('span');
