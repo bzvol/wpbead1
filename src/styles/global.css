@@ -82,7 +82,7 @@ select {
     font-weight: 400;
     font-style: normal;
     font-size: 1rem;
-    background-image: url(../../assets/dropdown.png);
+    background-image: url(../assets/dropdown.png);
     background-repeat: no-repeat;
     background-position: right .5rem center;
     background-size: 1rem;

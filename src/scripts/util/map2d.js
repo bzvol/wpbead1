@@ -1,11 +1,8 @@
 class Map2D {
     _map = new Map();
 
-    constructor(rows, cols, defaultValue) {
+    constructor(rows, cols = rows, defaultValue = null) {
         if (rows === undefined) return;
-
-        cols = cols || rows;
-        defaultValue = defaultValue || null;
 
         if (rows < 1 || cols < 1) {
             throw new Error('Invalid board size, rows and cols must be greater than 0');
@@ -39,6 +36,15 @@ class Map2D {
     get(x, y) {
         const key = this._encode(x, y);
         return this._map.get(key);
+    }
+
+    random() {
+        const keys = Array.from(this._map.keys());
+        if (keys.length === 0) return null;
+
+        const randomKey = keys[Math.floor(Math.random() * keys.length)];
+        const [x, y] = this._decode(randomKey);
+        return { x, y, value: this._map.get(randomKey) };
     }
 
     set(x, y, value) {
@@ -137,13 +143,32 @@ class Map2DDisplay {
     }
 
     _activateCell(cell, value) {
+        cell.dataset.active = 'true';
         cell.classList.add('active-cell');
-        cell.textContent = value;
+        cell.draggable = true;
+
+        cell.dataset.technology = value;
+        cell.style.backgroundImage = this._getCellBackground(value);
     }
 
     _deactivateCell(cell) {
+        cell.dataset.active = 'false';
         cell.classList.remove('active-cell');
-        cell.textContent = '';
+        cell.draggable = false;
+
+        delete cell.dataset.technology;
+        cell.style.removeProperty('background-image');
+    }
+
+    _getCellBackground(value) {
+        const [evolutionName, stepName] = value.split('/');
+
+        const evolution = evolutions.find(e => e.name === evolutionName);
+        if (!evolution) throw new Error(`Evolution ${evolutionName} not found`);
+        const step = evolution.steps.find(s => s.name === stepName);
+        if (!step) throw new Error(`Step ${stepName} not found in evolution ${evolutionName}`);
+
+        return `url('assets/logos/${step.img}')`;
     }
 
     _onSet(x, y, value) {

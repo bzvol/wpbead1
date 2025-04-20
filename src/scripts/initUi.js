@@ -38,6 +38,7 @@ function setBoardSize(cols, rows) {
         for (let j = 0; j < cols; j++) {
             const cell = document.createElement('div');
 
+            cell.dataset.active = 'false';
             cell.classList.add('board-cell');
             cell.dataset.x = j.toString();
             cell.dataset.y = i.toString();
@@ -51,9 +52,7 @@ function initializePoints(evolutions, difficulty) {
     const pointsSection = document.querySelector('#points');
     pointsSection.innerHTML = '';
 
-    for (const evolution of evolutions) {
-        if (evolution.difficulty !== difficulty) continue;
-
+    for (const evolution of getEvolutionsForDifficulty(difficulty)) {
         const {shortName, points} = evolution;
 
         const label = document.createElement('span');

@@ -63,10 +63,22 @@ body {
     outline: 2px solid var(--color-accent);
     outline-offset: -1px;
     border-radius: .75rem;
+    transition: outline-color .2s ease;
 }
 
 .board-cell.active-cell {
     outline-color: var(--color-accent-secondary);
+    z-index: 1;
+
+    background-color: var(--color-secondary);
+    background-size: 75%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.board-cell.cell-drag-over {
+    outline-color: var(--color-secondary);
+    z-index: 1;
 }
 
 #control {

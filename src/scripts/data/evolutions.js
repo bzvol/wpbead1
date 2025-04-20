@@ -482,3 +482,12 @@ const evolutions = [
         ]
     }
 ]
+
+function getEvolutionsForDifficulty(difficulty) {
+    const levelKeys = Object.keys(levels);
+    const difficultyIdx = levelKeys.indexOf(difficulty);
+    const difficulties = levelKeys.slice(0, difficultyIdx + 1);
+
+    return evolutions.filter(evolution =>
+        difficulties.includes(evolution.difficulty));
+}
