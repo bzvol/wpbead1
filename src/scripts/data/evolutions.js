@@ -195,7 +195,7 @@ const evolutions = [
             {
                 "step": 5,
                 "name": ".NET Core",
-                "img": "dotNet_core.png",
+                "img": "dotNet_Core.png",
                 "description": "A cross-platform version of .NET for modern cloud applications."
             },
             {
