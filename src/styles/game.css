@@ -63,7 +63,9 @@ body {
     outline: 2px solid var(--color-accent);
     outline-offset: -1px;
     border-radius: .75rem;
-    transition: outline-color .2s ease;
+    transition: outline-color .4s ease,
+                outline-width .2s ease,
+                background-color .4s ease;
 }
 
 .board-cell.active-cell {
@@ -83,7 +85,7 @@ body {
 }
 
 .board-cell.cell-drag-over {
-    outline-color: var(--color-secondary);
+    background-color: var(--color-accent-secondary);
     z-index: 1;
 }
 
@@ -154,8 +156,24 @@ body {
     }
 }
 
+@keyframes slow-blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 #btn-draw:disabled:hover {
     animation: horizontal-shake .75s ease-in-out;
+}
+
+#game-container:has(#btn-draw:disabled:hover) #board {
+    animation: slow-blink 1.5s ease infinite;
 }
 
 #points {
