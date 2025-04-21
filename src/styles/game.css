@@ -67,13 +67,19 @@ body {
 }
 
 .board-cell.active-cell {
+    outline-width: 3px;
     outline-color: var(--color-accent-secondary);
     z-index: 1;
+    cursor: grab;
 
     background-color: var(--color-secondary);
     background-size: 75%;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.board-cell:not(.active-cell) {
+    cursor: pointer;
 }
 
 .board-cell.cell-drag-over {

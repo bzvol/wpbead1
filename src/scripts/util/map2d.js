@@ -10,14 +10,15 @@ class Map2D {
 
         this.cols = cols;
         this.rows = rows;
+        this.defaultValue = defaultValue;
 
-        this.eventListeners = {
+        this._eventListeners = {
             onSet: null,
             onDelete: null,
             onClear: null
         };
 
-        this.fill(this.rows, this.cols, defaultValue);
+        this.fill(this.rows, this.cols, this.defaultValue);
     }
 
     // Using the Cantor pairing function to encode 2D coordinates into a single number
@@ -38,21 +39,27 @@ class Map2D {
         return this._map.get(key);
     }
 
-    random() {
-        const keys = Array.from(this._map.keys());
+    random(onlyDefaultValue = true) {
+       let entries = Array.from(this._map.entries());
+       if (onlyDefaultValue) {
+           entries = entries.filter(([_, value]) => value === this.defaultValue);
+       }
+
+        const keys = entries.map(([key, _]) => key);
         if (keys.length === 0) return null;
+        const isLastKey = keys.length === 1;
 
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
         const [x, y] = this._decode(randomKey);
-        return { x, y, value: this._map.get(randomKey) };
+        return { x, y, value: this._map.get(randomKey), isLastKey };
     }
 
     set(x, y, value) {
         const key = this._encode(x, y);
         this._map.set(key, value);
 
-        if (this.eventListeners.onSet) {
-            this.eventListeners.onSet(x, y, value);
+        if (this._eventListeners.onSet) {
+            this._eventListeners.onSet(x, y, value);
         }
     }
 
@@ -65,8 +72,8 @@ class Map2D {
         const key = this._encode(x, y);
         const deleted = this._map.delete(key);
 
-        if (deleted && this.eventListeners.onDelete) {
-            this.eventListeners.onDelete(x, y);
+        if (deleted && this._eventListeners.onDelete) {
+            this._eventListeners.onDelete(x, y);
         }
 
         return deleted;
@@ -75,8 +82,8 @@ class Map2D {
     clear() {
         this._map.clear();
 
-        if (this.eventListeners.onClear) {
-            this.eventListeners.onClear();
+        if (this._eventListeners.onClear) {
+            this._eventListeners.onClear();
         }
     }
 
@@ -117,9 +124,9 @@ class Map2D {
     }
 
     setEventListeners(onSet, onDelete, onClear) {
-        this.eventListeners.onSet = onSet;
-        this.eventListeners.onDelete = onDelete;
-        this.eventListeners.onClear = onClear;
+        this._eventListeners.onSet = onSet;
+        this._eventListeners.onDelete = onDelete;
+        this._eventListeners.onClear = onClear;
     }
 }
 

@@ -2,6 +2,7 @@ class Gameplay {
     constructor(name, difficulty, levels) {
         this.playerName = name;
         this.difficulty = difficulty;
+        this.score = 0;
 
         const settings = levels[difficulty];
         this._map = new Map2D(settings.rows, settings.cols);
@@ -13,25 +14,28 @@ class Gameplay {
 
         this._initUiWithParams();
         this._initBoard();
+        this._initDrawBtn();
     }
 
     _initUiWithParams() {
         GameplayUI.setName(this.playerName);
         GameplayUI.setDifficulty(this.difficulty);
-        GameplayUI.setScore(0);
+        GameplayUI.setScore(this.score);
         this._timer.updateDisplay();
     }
 
     _initBoard() {
         const n = Math.min(levels[this.difficulty].rows, levels[this.difficulty].cols);
-        for (let i = 0; i < n; i++) {
-            const randomCell = this._map.random();
-            const randomTech = this._randomTech();
-            this._map.set(randomCell.x, randomCell.y, {
-                evolutionName: randomTech.evolutionName,
-                stepName: randomTech.step.name
-            });
-        }
+        for (let i = 0; i < n; i++) this._draw();
+
+        document.querySelectorAll('#board .board-cell')
+            .forEach(cell =>
+                cell.addEventListener('click', this._onCellClick.bind(this)));
+    }
+
+    _initDrawBtn() {
+        const drawBtn = document.querySelector('#btn-draw');
+        drawBtn.addEventListener('click', this._draw.bind(this));
     }
 
     start() {
@@ -70,6 +74,35 @@ class Gameplay {
         const step = evolution.steps.find(step => step.step === level);
 
         return {step, evolutionName: evolution.name};
+    }
+
+    _draw() {
+        const randomCell = this._map.random();
+        if (!randomCell) return;
+
+        const randomTech = this._randomTech();
+        this._map.set(randomCell.x, randomCell.y, {
+            evolutionName: randomTech.evolutionName,
+            stepName: randomTech.step.name
+        });
+
+        if (randomCell.isLastKey) {
+            const drawBtn = document.querySelector('#btn-draw');
+            drawBtn.disabled = true;
+        }
+    }
+
+    _onCellClick(event) {
+        const cell = event.currentTarget;
+        if (cell.dataset.active === 'true') return;
+
+        const x = parseInt(cell.dataset.x);
+        const y = parseInt(cell.dataset.y);
+        const randomTech = this._randomTech();
+        this._map.set(x, y, {
+            evolutionName: randomTech.evolutionName,
+            stepName: randomTech.step.name
+        });
     }
 }
 
