@@ -278,7 +278,7 @@ const evolutions = [
                 "img": "mp3.png",
                 "description": "A compressed format revolutionizing digital music."
             }, {
-                "step": 3,
+                "step": 4,
                 "name": "AAC",
                 "img": "aac.png",
                 "description": "AAC is an advanced audio codec offering better compression and quality than MP3."
