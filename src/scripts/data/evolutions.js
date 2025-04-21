@@ -491,3 +491,12 @@ function getEvolutionsForDifficulty(difficulty) {
     return evolutions.filter(evolution =>
         difficulties.includes(evolution.difficulty));
 }
+
+function getTechnologyByName(evolutionName, stepName) {
+    const evolution = evolutions.find(e => e.name === evolutionName);
+    if (!evolution) throw new Error(`Evolution ${evolutionName} not found`);
+    const step = evolution.steps.find(s => s.name === stepName);
+    if (!step) throw new Error(`Step ${stepName} not found in evolution ${evolutionName}`);
+
+    return {evolution, step, level: step.step};
+}

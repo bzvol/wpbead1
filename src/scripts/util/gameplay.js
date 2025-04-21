@@ -27,7 +27,10 @@ class Gameplay {
         for (let i = 0; i < n; i++) {
             const randomCell = this._map.random();
             const randomTech = this._randomTech();
-            this._map.set(randomCell.x, randomCell.y, `${randomTech.evolutionName}/${randomTech.step.name}`);
+            this._map.set(randomCell.x, randomCell.y, {
+                evolutionName: randomTech.evolutionName,
+                stepName: randomTech.step.name
+            });
         }
     }
 
@@ -39,18 +42,22 @@ class Gameplay {
     }
 
     _onMerge(x1, y1, x2, y2, tech) {
-        const [evolutionName, stepName] = tech.split('/');
-        const evolution = evolutions.find(e => e.name === evolutionName);
-        const step = evolution.steps.find(step => step.name === stepName);
+        const {evolution, step, level} = tech;
 
         if (step.step >= evolution.steps.length) return;
-        const nextStep = evolution.steps.find(s => s.step === step.step + 1);
-        if (!nextStep) return;
+        const nextStep = evolution.steps.find(s => s.step === level + 1);
+        if (!nextStep) throw new Error(`Could not find step ${level + 1} for evolution ${evolution.name}`);
 
-        this._map.set(x2, y2, `${evolutionName}/${nextStep.name}`);
+        this._map.set(x2, y2, {
+            evolutionName: evolution.name,
+            stepName: nextStep.name
+        });
 
         const randomTech = this._randomTech();
-        this._map.set(x1, y1, `${randomTech.evolutionName}/${randomTech.step.name}`);
+        this._map.set(x1, y1, {
+            evolutionName: randomTech.evolutionName,
+            stepName: randomTech.step.name
+        });
     }
 
     _randomTech(level = 1) {

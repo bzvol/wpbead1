@@ -147,8 +147,13 @@ class Map2DDisplay {
         cell.classList.add('active-cell');
         cell.draggable = true;
 
-        cell.dataset.technology = value;
-        cell.style.backgroundImage = this._getCellBackground(value);
+        const {evolutionName, stepName} = value;
+        const {step} = getTechnologyByName(evolutionName, stepName);
+
+        cell.dataset.evolution = evolutionName;
+        cell.dataset.step = stepName;
+
+        cell.style.backgroundImage = `url('assets/logos/${step.img}')`;
     }
 
     _deactivateCell(cell) {
@@ -156,19 +161,10 @@ class Map2DDisplay {
         cell.classList.remove('active-cell');
         cell.draggable = false;
 
-        delete cell.dataset.technology;
+        delete cell.dataset.evolution;
+        delete cell.dataset.step;
+
         cell.style.removeProperty('background-image');
-    }
-
-    _getCellBackground(value) {
-        const [evolutionName, stepName] = value.split('/');
-
-        const evolution = evolutions.find(e => e.name === evolutionName);
-        if (!evolution) throw new Error(`Evolution ${evolutionName} not found`);
-        const step = evolution.steps.find(s => s.name === stepName);
-        if (!step) throw new Error(`Step ${stepName} not found in evolution ${evolutionName}`);
-
-        return `url('assets/logos/${step.img}')`;
     }
 
     _onSet(x, y, value) {
@@ -188,5 +184,10 @@ class Map2DDisplay {
     _onClear() {
         const cells = this._boardElement.querySelectorAll('.board-cell');
         cells.forEach(cell => this._deactivateCell(cell));
+    }
+
+    static getTechnologyFromCell(cell) {
+        const {evolution: evolutionName, step: stepName} = cell.dataset;
+        return getTechnologyByName(evolutionName, stepName);
     }
 }

@@ -10,7 +10,8 @@ class DragDropHandler {
 
     _initDragEvents() {
         const cells = this._boardElement.querySelectorAll('.board-cell');
-        cells.forEach(cell => Object.entries(this._dragEventListeners)
+        const dragEventListenerEntries = Object.entries(this._dragEventListeners);
+        cells.forEach(cell => dragEventListenerEntries
             .forEach(([eventName, handler]) =>
                 cell.addEventListener(eventName, handler.bind(this))));
     }
@@ -34,7 +35,7 @@ class DragDropHandler {
                 this._dragged.dataset.x, this._dragged.dataset.y,
                 cell.dataset.x, cell.dataset.y
             ];
-            const tech = this._dragged.dataset.technology;
+            const tech = Map2DDisplay.getTechnologyFromCell(this._dragged);
 
             this._dragged = null;
             this._onMerge(x1, y1, x2, y2, tech);
@@ -66,7 +67,8 @@ class DragDropHandler {
     _canDropAt(element) {
         return element !== this._dragged
             && element.dataset.active === 'true'
-            && this._dragged.dataset.technology === element.dataset.technology;
+            && this._dragged.dataset.evolution === element.dataset.evolution
+            && this._dragged.dataset.step === element.dataset.step;
     }
 
     get _dragEventListeners() {
