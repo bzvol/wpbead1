@@ -67,10 +67,12 @@ body {
                 outline-width .2s ease,
                 background-color .4s ease;
 
+    cursor: crosshair;
+
     position: relative;
 }
 
-.board-cell.active-cell {
+.board-cell[data-active="true"] {
     outline-width: 3px;
     outline-color: var(--color-accent-secondary);
     z-index: 1;
@@ -82,8 +84,10 @@ body {
     background-repeat: no-repeat;
 }
 
-.board-cell:not(.active-cell) {
-    cursor: pointer;
+.board-cell[data-last-step="true"] {
+    outline-width: 2px;
+    outline-color: var(--color-accent);
+    cursor: crosshair;
 }
 
 .board-cell.cell-drag-over {

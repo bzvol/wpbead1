@@ -3,6 +3,7 @@ class Gameplay {
         this.playerName = name;
         this.difficulty = difficulty;
         this.score = 0;
+        this.evolutionPoints = new Map(evolutions.map(e => [e.shortName, 0]));
 
         const settings = levels[difficulty];
         this._map = new Map2D(settings.rows, settings.cols);
@@ -22,6 +23,7 @@ class Gameplay {
         GameplayUI.setName(this.playerName);
         GameplayUI.setDifficulty(this.difficulty);
         GameplayUI.setScore(this.score);
+        evolutions.forEach(e => GameplayUI.setEvolutionPoints(e, 0));
         this._timer.updateDisplay();
     }
 
@@ -57,6 +59,10 @@ class Gameplay {
             evolutionName: evolution.name,
             stepName: nextStep.name
         });
+
+        if (nextStep.step === evolution.steps.length) {
+            this._mapDisplay.setLastStepCell(x2, y2);
+        }
 
         const randomTech = this._randomTech();
         this._map.set(x1, y1, {
@@ -95,15 +101,34 @@ class Gameplay {
 
     _onCellClick(event) {
         const cell = event.currentTarget;
-        if (cell.dataset.active === 'true') return;
+        if (cell.dataset.active === 'true' &&
+            cell.dataset.lastStep === 'false') return;
 
         const x = parseInt(cell.dataset.x);
         const y = parseInt(cell.dataset.y);
+
+        if (cell.dataset.lastStep === 'true') {
+            const {evolution} = Map2DDisplay.getTechnologyFromCell(cell);
+            this._increaseScore(evolution);
+            this._map.delete(x, y);
+
+            return;
+        }
+
         const randomTech = this._randomTech();
         this._map.set(x, y, {
             evolutionName: randomTech.evolutionName,
             stepName: randomTech.step.name
         });
+    }
+
+    _increaseScore(evolution) {
+        this.score += evolution.points;
+        const evolutionPoints = this.evolutionPoints.get(evolution.shortName) + evolution.points;
+        this.evolutionPoints.set(evolution.shortName, evolutionPoints);
+
+        GameplayUI.setScore(this.score);
+        GameplayUI.setEvolutionPoints(evolution, evolutionPoints);
     }
 }
 
@@ -121,6 +146,18 @@ class GameplayUI {
     static setScore(score) {
         const scoreElement = document.querySelector('#info-score');
         scoreElement.textContent = ': ' + score.toString().padStart(6, '0');
+    }
+
+    static setEvolutionPoints(evolution, points) {
+        const labels = [...document.querySelectorAll('#points .label')];
+        const labelElement = labels.find(l => l.textContent === evolution.shortName);
+        if (!labelElement) return;
+
+        const valueElement = labelElement.nextSibling;
+
+        const pointsPerIncreaseString = evolution.points.toString().padStart(2, '0');
+        const pointsString = points.toString().padStart(2, '0');
+        valueElement.textContent = `* ${pointsPerIncreaseString}p = ${pointsString}`;
     }
 }
 

@@ -41,6 +41,7 @@ function createBoardCell(x, y) {
     const cell = document.createElement('div');
 
     cell.dataset.active = 'false';
+    cell.dataset.lastStep = 'false';
     cell.classList.add('board-cell');
     cell.dataset.x = x.toString();
     cell.dataset.y = y.toString();

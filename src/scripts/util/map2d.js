@@ -151,7 +151,7 @@ class Map2DDisplay {
 
     _activateCell(cell, value) {
         cell.dataset.active = 'true';
-        cell.classList.add('active-cell');
+        cell.dataset.lastStep = 'false';
         cell.draggable = true;
 
         const {evolutionName, stepName} = value;
@@ -167,13 +167,21 @@ class Map2DDisplay {
 
     _deactivateCell(cell) {
         cell.dataset.active = 'false';
-        cell.classList.remove('active-cell');
+        cell.dataset.lastStep = 'false';
         cell.draggable = false;
 
         delete cell.dataset.evolution;
         delete cell.dataset.step;
 
         cell.style.removeProperty('background-image');
+    }
+
+    setLastStepCell(x, y) {
+        const cell = this._getCell(x, y)
+        if (cell) {
+            cell.dataset.lastStep = 'true';
+            cell.draggable = false;
+        }
     }
 
     _updateTooltip(cell, evolution, step) {

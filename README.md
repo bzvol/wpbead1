@@ -1,3 +1,5 @@
+*Készült összesen 37 óra (2+3 nap) alatt.*
+
 Nyilatkozat
 
 Zvolenszki Benjámin
@@ -24,7 +26,7 @@ Alap feladatok (12 pont)
 - [x] Kezdőképernyő – A játékos megadhatja a nevét és kiválaszthatja a nehézségi szintet. (1 pont)
 - [x] Játék UI – A játékban látható a játékos neve, a pontszáma és a szinthez tartozó időkeret (visszaszámlálást nem kell megvalósítani). (1 pont)
 - [x] Játék UI – A játékban a kiválasztott szinthez tartozó időkeret, táblaméret kerül beállításra, illetve csak azok az evolúciós elemek, és listák érhetőek el a játékos számára. (3 pont)
-- [ ] Pontozás – Az evolúciós láncok végigvitele hozzáadja a megfelelő pontokat az összpontszámhoz, és az adott technológia pontjaihoz is. (2 pont)
+- [x] Pontozás – Az evolúciós láncok végigvitele hozzáadja a megfelelő pontokat az összpontszámhoz, és az adott technológia pontjaihoz is. (2 pont)
 - [x] Játékidő kezelése – A szinthez tartozó időtartam (10-15-20 perc) a játék során, másodpercenként csökken. (1 pont)
 - [ ] Játékidő kezelése – A játék a szinthez tartozó időkeret (10-15-20 perc) lejárta után véget ér. (1 pont)
 - [ ] Game Over képernyő – Az idő lejártakor megjelenik egy felugró ablak az eredménnyel. (1 pont)
