@@ -21,6 +21,8 @@ class DragDropHandler {
 
         this._dragged = event.currentTarget;
         event.dataTransfer.setData('text/plain', '');
+        event.currentTarget.querySelector('.tooltip')
+            .classList.remove('show-tooltip');
     }
 
     _onDrop(event) {

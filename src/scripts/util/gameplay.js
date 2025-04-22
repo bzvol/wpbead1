@@ -1,5 +1,5 @@
 class Gameplay {
-    constructor(name, difficulty, levels) {
+    constructor(name, difficulty) {
         this.playerName = name;
         this.difficulty = difficulty;
         this.score = 0;
@@ -11,6 +11,7 @@ class Gameplay {
         const boardElement = document.querySelector('#board');
         this._mapDisplay = new Map2DDisplay(this._map, boardElement);
         this._dndHandler = new DragDropHandler(boardElement, this._onMerge.bind(this));
+        this._tooltipHoverHandler = new TooltipHoverHandler(boardElement);
 
         this._initUiWithParams();
         this._initBoard();

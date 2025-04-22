@@ -155,12 +155,14 @@ class Map2DDisplay {
         cell.draggable = true;
 
         const {evolutionName, stepName} = value;
-        const {step} = getTechnologyByName(evolutionName, stepName);
+        const {evolution, step} = getTechnologyByName(evolutionName, stepName);
 
         cell.dataset.evolution = evolutionName;
         cell.dataset.step = stepName;
 
         cell.style.backgroundImage = `url('assets/logos/${step.img}')`;
+
+        this._updateTooltip(cell, evolution, step);
     }
 
     _deactivateCell(cell) {
@@ -172,6 +174,18 @@ class Map2DDisplay {
         delete cell.dataset.step;
 
         cell.style.removeProperty('background-image');
+    }
+
+    _updateTooltip(cell, evolution, step) {
+        const title = cell.querySelector('.tooltip-title');
+        const desc = cell.querySelector('.tooltip-desc');
+        const img = cell.querySelector('.tooltip-img');
+
+        title.textContent = step.name;
+        desc.textContent = step.description;
+        img.src = `assets/evolutions/${evolution.tooltip}`;
+        img.alt = evolution.description;
+        img.title = evolution.description;
     }
 
     _onSet(x, y, value) {

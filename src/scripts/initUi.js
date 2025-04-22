@@ -36,16 +36,40 @@ function setBoardSize(cols, rows) {
 
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-            const cell = document.createElement('div');
-
-            cell.dataset.active = 'false';
-            cell.classList.add('board-cell');
-            cell.dataset.x = j.toString();
-            cell.dataset.y = i.toString();
-
+            const cell = createBoardCell(j, i);
+            const tooltip = createTooltip();
+            cell.appendChild(tooltip);
             board.appendChild(cell);
         }
     }
+}
+
+function createBoardCell(x, y) {
+    const cell = document.createElement('div');
+
+    cell.dataset.active = 'false';
+    cell.classList.add('board-cell');
+    cell.dataset.x = x.toString();
+    cell.dataset.y = y.toString();
+
+    return cell;
+}
+
+function createTooltip() {
+    const tooltip = document.createElement('div');
+    tooltip.classList.add('tooltip');
+
+    const title = document.createElement('h3');
+    title.classList.add('tooltip-title');
+    const description = document.createElement('div');
+    description.classList.add('tooltip-desc');
+    const tooltipImage = document.createElement('img');
+    tooltipImage.classList.add('tooltip-img');
+    tooltipImage.alt = 'Evolution chain';
+
+    tooltip.append(title, description, tooltipImage);
+
+    return tooltip;
 }
 
 function initializePoints(evolutions, difficulty) {
