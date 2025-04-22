@@ -3,17 +3,10 @@ initUi(difficulty, evolutions, levels);
 runGame(name, difficulty);
 
 function initUi(difficulty, evolutions, levels) {
-    // Generate the board based on the difficulty level
     const {cols, rows} = levels[difficulty];
     setBoardSize(cols, rows);
-
-    // Initialize the points section
     initializePoints(evolutions, difficulty);
-
-    // Initialize the leaderboard
     initializeLeaderboard(levels);
-
-    // Load the leaderboard data from local storage
     loadLeaderboardData();
 }
 
